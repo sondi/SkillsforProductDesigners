@@ -48,6 +48,7 @@ For each piece of output the user would see, find the source:
 | Success messages | `console.log`, `chalk`, logging utils | `console.log('✓ Success')` |
 | Error messages | `catch` blocks, error handlers | `console.error()`, `throw new Error()` |
 | Progress/spinners | `ora`, `cli-spinners`, `listr` | `spinner.start()`, `spinner.succeed()` |
+| Empty results | Length checks before rendering lists or tables | `if (items.length === 0)`, `No results found` |
 | Formatted output | `boxen`, `cli-table`, `columnify` | `table()`, `box()` |
 
 ### Step 3: Map All Decision Points
@@ -57,6 +58,7 @@ Find every conditional that affects the user journey:
 - Validation logic (`if (!config.isValid)`)
 - Feature flags or environment checks
 - Error conditions that branch the flow
+- Empty data checks (`if (results.length === 0)`)
 
 ### Step 4: Complete the Discovery Checklist
 
@@ -68,6 +70,8 @@ Discovery Checklist:
 [ ] All interactive prompts (count: ___)
 [ ] All success states (count: ___)
 [ ] All error states (count: ___)
+[ ] All loading states (count: ___)
+[ ] All empty states (count: ___)
 [ ] All decision branches (count: ___)
 [ ] API calls or external processes (count: ___)
 ```
@@ -109,6 +113,8 @@ Start with a summary of what you found:
 - Decision branches: [count] (files: ...)
 - Success states: [count] (files: ...)
 - Error states: [count] (files: ...)
+- Loading states: [count] (files: ...)
+- Empty states: [count] (files: ...)
 
 ### Gaps (needs verification):
 - [List anything you couldn't find or are uncertain about]
@@ -222,7 +228,8 @@ Include mockups for:
 - ✅ Interactive prompts (select, input, confirm)
 - ✅ Success messages
 - ✅ Error messages
-- ✅ Progress indicators
+- ✅ Progress indicators and loading states (spinners shown while waiting on an API call or long task)
+- ✅ Empty states (what the user sees when a list, search or query returns nothing)
 - ❌ Skip purely internal/backend steps with no visible output
 
 Use these symbols consistently:
@@ -230,6 +237,7 @@ Use these symbols consistently:
 - `›` for selected option
 - `✓` for success
 - `✗` or `⚠` for errors/warnings
+- `⠋` for a spinner frame in a loading state
 - `↑↓ navigate — ⏎ select — Esc cancel` for interactive prompts
 
 ### Finding CLI Output in Code
